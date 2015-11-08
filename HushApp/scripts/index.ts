@@ -53,13 +53,25 @@ module HushApp {
     }
 
     function sendMessage(lon, lat, text) {
+
         var message = {
             'text': text,
             'longitude': lon,
             'latitude': lat
+        };
+
+        var settings = {
+            url: 'http://opasowo:6066/api/messages',
+            data:message,
+            method: 'POST',
+            dataType: 'json',
+            success: (response) => {
+                log("sent... " + JSON.stringify(message));
+                refreshMessages();
+            }
         }
 
-        $.post('http://localhost:60020/api/messages', message, () => { log("sent..."); refreshMessages(); });
+        $.ajax(settings);
     };
 
     var refreshMessages = () => {
@@ -72,15 +84,14 @@ module HushApp {
             'latitude': position.coords.latitude
         };
 
-        $.post('http://localhost:60020/api/messages?distance=10.0', origin, renderMessageList);
+        $.post('http://opasowo:6066/api/messages?distance=10.0', origin, renderMessageList);
         log("refreshed...");
     }
 
     function renderMessageList(messages) {
-        debugger;
-        $('#messages-in-range').html();
+
+        $('#messages-in-range').html('');
         $.each(messages, function (index, message) {
-            debugger;
             $('#messages-in-range').append('<li>' + message.text + '</li>');
         });
         log("rendered...");
