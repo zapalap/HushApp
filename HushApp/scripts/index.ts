@@ -60,7 +60,8 @@ module HushApp {
 
         $('#log').html('');
         $.each(logStore, function (message, occurences) {
-            $('#log').append("<div class='log-entry'>" + message + "x" + occurences + "</div>");
+            var occurenceString = occurences > 1 ? "x" + occurences : "";
+            $('#log').append("<div class='log-entry'>" + message + occurenceString + "</div>");
         });
         
     };
