@@ -7,7 +7,7 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src *">
     <title>HushApp</title>
 
     <!-- HushApp references -->
@@ -16,7 +16,7 @@
 <body>
     <p>Hello, your application is ready!</p>
 
-    <script src="scripts/jquery-1.8.0.min.js"></script>
+    <script src="scripts/jquery-2.1.4.min.js"></script>
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="cordova.js"></script>
     <script src="scripts/platformOverrides.js"></script>
