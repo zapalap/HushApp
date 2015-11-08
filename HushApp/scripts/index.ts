@@ -29,9 +29,11 @@ module HushApp {
     }
 
     function renderHomeView() {
-        var html = "<h1>Post message</h1>" +
-            "<input id='message-text' type='text' placeholder='Enter message'/>" +
+        var html = "<h1>Hush</h1>" +
+            "<input id='message-text' class='message-input' type='text' placeholder='Enter message'/>" +
             "<button type='button' id='send-button'>Send</button>" +
+            
+            "<h2>Messages in range of <input id= 'range' type= 'text' placeholder= 'Enter range' value= '10' /> meters</h2>" +
             "<ul id='messages-in-range'></ul>" +
             "<div id='log'></div>"
             ;
@@ -41,11 +43,26 @@ module HushApp {
             navigator.geolocation.getCurrentPosition(onGeoLocSend);
         });
 
+        $('#range').on('input', () => { refreshMessages() });
+        setInterval(() => refreshMessages(), 5000);
+
         refreshMessages();
     }
 
+    var logStore = {};
+    
     function log(message) {
-        $('#log').append("<div>" + message + "</div>");
+        if (logStore[message] == undefined) {
+            logStore[message] = 1;
+        } else {
+            logStore[message] += 1;
+        } 
+
+        $('#log').html('');
+        $.each(logStore, function (message, occurences) {
+            $('#log').append("<div class='log-entry'>" + message + "x" + occurences + "</div>");
+        });
+        
     };
 
     var onGeoLocSend = (position) => {
@@ -83,8 +100,8 @@ module HushApp {
             'longitude': position.coords.longitude,
             'latitude': position.coords.latitude
         };
-
-        $.post('http://opasowo:6066/api/messages?distance=10.0', origin, renderMessageList);
+        var range = $('#range').val();
+        $.post('http://opasowo:6066/api/messages?distance='+range, origin, renderMessageList);
         log("refreshed...");
     }
 
