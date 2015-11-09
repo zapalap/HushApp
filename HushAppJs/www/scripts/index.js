@@ -11,9 +11,8 @@
         // Handle the Cordova pause and resume events
         document.addEventListener('pause', onPause.bind(this), false);
         document.addEventListener('resume', onResume.bind(this), false);
-
-        var messageListView = new MessageListView({ vent: vent });
-        var inputView = new InputView({ vent: vent });
+        
+        bootstrapApplication();
 
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
     };
@@ -24,5 +23,11 @@
 
     function onResume() {
         // TODO: This application has been reactivated. Restore application state here.
+    };
+
+    function bootstrapApplication() {
+        var vent = _.extend({}, Backbone.Events);
+        var messageListView = new MessageListView({ vent: vent });
+        var inputView = new InputView({ vent: vent });
     };
 })();

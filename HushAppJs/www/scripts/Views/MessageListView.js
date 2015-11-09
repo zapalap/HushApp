@@ -1,34 +1,4 @@
-﻿/// <reference path="script/backbone.js"/>
-/// <reference path="script/underscore.js"/>
-
-
-var Message = Backbone.Model.extend({
-    defaults: {
-        id: 0,
-        text: "Default",
-        latitude: 0,
-        longitude: 0,
-        dateCreated: ""
-    }
-});
-
-var MessageList = Backbone.Collection.extend({
-    model: Message
-});
-
-var MessageView = Backbone.View.extend({
-    template: "#message-template",
-    initialize: function () {
-        _.bindAll(this, 'render');
-    },
-    render: function () {
-        var template = _.template($(this.template).html(), { messageText: this.model.get('text'), messageId: this.model.get('id') });
-        $(this.el).html(template);
-        return this;
-    }
-});
-
-var MessageListView = Backbone.View.extend({
+﻿var MessageListView = Backbone.View.extend({
     el: $('#message-list-area'),
     template: '#message-list',
     events: {
@@ -87,45 +57,3 @@ var MessageListView = Backbone.View.extend({
         this.collection.add(addedCol);
     }
 });
-
-var InputView = Backbone.View.extend({
-    el: $('#input-area'),
-    template: '#input-template',
-    events: {
-        'click button#send-button': 'sendIfAcquired'
-    },
-    initialize: function (options) {
-        _.bindAll(this, 'sendMessage', 'sendIfAcquired')
-        this.vent = options.vent;
-        this.render();
-    },
-    render: function () {
-        var template = _.template($(this.template).html());
-        $(this.el).html(template);
-    },
-    sendIfAcquired: function () {
-        navigator.geolocation.getCurrentPosition(this.sendMessage);
-    },
-    sendMessage: function (position) {
-        var message = {
-            'text': $("#message-text").val(),
-            'longitude': position.coords.longitude,
-            'latitude': position.coords.latitude
-        };
-
-        var settings = {
-            url: 'http://opasowo:6066/api/messages',
-            data: message,
-            type: 'POST',
-            dataType: 'json',
-            success: (response) => {
-                this.vent.trigger("messageSent");
-            }
-        }
-
-        $.ajax(settings);
-    }
-});
-
-var vent = _.extend({}, Backbone.Events);
-
