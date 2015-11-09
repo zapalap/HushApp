@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src *">
+    <title>HushApp</title>
+
+    <!-- HushApp references -->
+    <link href="css/index.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>Hush</h1>
+   
+    <div id="message-list-area"></div>
+    <div id="input-area"></div>
+
+    <!--templates-->
+    <script type="text/template" id="message-template">
+        <li id="<%= messageId %>"><%= messageText %></li>
+    </script>
+
+    <script type="text/template" id="input-template">
+        <input id='message-text' class='message-input' type='text' placeholder='Enter message' />
+        <button type='button' id='send-button'>Send</button>
+    </script>   
+
+    <script type="text/template" id="message-list">
+        <h2>Messages in range of <input id='range' type='text' placeholder='Enter range' value='10' /> meters</h2>
+        <ul id='messages-in-range'></ul>
+        <button type="button" id="refresh">Refresh</button>
+    </script>
+
+
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script src="scripts/underscore.min.js"></script>
+    <script src="scripts/backbone.min.js"></script>
+    <script src="scripts/messageList.js"></script>
+    <!-- Cordova reference, this is added to your app when it's built. -->
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="scripts/index.js"></script>
+</body>
+</html>
