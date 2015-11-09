@@ -7,7 +7,12 @@
     },
     initialize: function (options) {
         _.bindAll(this, 'render', 'appendMessage', 'refresh', 'fetchMessages', 'addMessages');
+
+        //resolve dependencies
         this.eventBus = options.eventBus;
+        this.collectionService = options.collectionService;
+
+        //bind global events
         this.eventBus.on('messageSent', this.refresh);
         this.eventBus.on('autoRefresh', this.refresh);
 
@@ -44,17 +49,8 @@
     },
     addMessages: function (messages) {
         var col = _.pluck(this.collection.models, 'attributes');
-
-        var localIds = _.pluck(col, 'id');
-        var remoteIds = _.pluck(messages, 'id');
-
-        var removed = _.difference(localIds, remoteIds);
-        var added = _.without.apply(_, [remoteIds].concat(localIds).concat(removed));
-
-        var removedCol = _.filter(col, (message) => _.contains(removed, message.id));
-        var addedCol = _.filter(messages, (message) => _.contains(added, message.id));
-
-        this.collection.remove(removedCol);
-        this.collection.add(addedCol);
+        var reconciled = this.collectionService.recon(col, messages, 'id');
+        this.collection.remove(reconciled.removed);
+        this.collection.add(reconciled.added);
     }
 });

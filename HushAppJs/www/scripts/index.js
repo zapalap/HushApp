@@ -26,14 +26,18 @@
     };
 
     function bootstrapApplication() {
+
+        //resolve dependencies
         var EventBus = _.extend({}, Backbone.Events);
+        CollectionService = CollectionService();
 
         //setup autoRefresh broadcast
         setInterval(function () {
             EventBus.trigger('autoRefresh');
-        }, 1000)
+        }, 5000)
 
-        var messageListView = new MessageListView({ eventBus: EventBus });
+        //Compose views
+        var messageListView = new MessageListView({ eventBus: EventBus, collectionService: CollectionService });
         var inputView = new InputView({ eventBus: EventBus });
     };
 })();

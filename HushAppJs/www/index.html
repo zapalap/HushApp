@@ -30,7 +30,7 @@
     </script>
 
     <script type="text/template" id="message-list">
-        <h2>Messages in range of <input id='range' type='text' placeholder='Enter range' value='10' /> meters</h2>
+        <h3>Messages in range of <input id='range' type='text' placeholder='Enter range' value='10' /> meters</h3>
         <ul id='messages-in-range'></ul>
         <button type="button" id="refresh">Refresh</button>
     </script>
@@ -40,12 +40,19 @@
     <script src="scripts/underscore.min.js"></script>
     <script src="scripts/backbone.min.js"></script>
 
-    <!--Backbone components-->
+   
+
+    <!--Models and Collections-->
     <script src="scripts/Models/Message.js"></script>
     <script src="scripts/Collections/MessageList.js"></script>
+
+    <!--Views-->
     <script src="scripts/Views/InputView.js"></script>
     <script src="scripts/Views/MessageListView.js"></script>
     <script src="scripts/Views/MessageView.js"></script>
+
+    <!--Services-->
+    <script src="scripts/Services/CollectionService.js"></script>
 
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="cordova.js"></script>
