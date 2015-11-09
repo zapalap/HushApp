@@ -16,7 +16,6 @@
         this.render();
     },
     render: function () {
-        var self = this;
         var template = _.template($(this.template).html());
         $(this.el).append(template);
         this.refresh();
