@@ -27,6 +27,12 @@
 
     function bootstrapApplication() {
         var EventBus = _.extend({}, Backbone.Events);
+
+        //setup autoRefresh broadcast
+        setInterval(function () {
+            EventBus.trigger('autoRefresh');
+        }, 1000)
+
         var messageListView = new MessageListView({ eventBus: EventBus });
         var inputView = new InputView({ eventBus: EventBus });
     };

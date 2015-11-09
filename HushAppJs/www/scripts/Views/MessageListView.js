@@ -9,6 +9,7 @@
         _.bindAll(this, 'render', 'appendMessage', 'refresh', 'fetchMessages', 'addMessages');
         this.eventBus = options.eventBus;
         this.eventBus.on('messageSent', this.refresh);
+        this.eventBus.on('autoRefresh', this.refresh);
 
         this.collection = new MessageList();
         this.collection.bind('add', this.appendMessage);
