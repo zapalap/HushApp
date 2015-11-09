@@ -7,7 +7,8 @@
     },
     initialize: function (options) {
         _.bindAll(this, 'render', 'appendMessage', 'refresh', 'fetchMessages', 'addMessages');
-        options.vent.bind("messageSent", 'refresh');
+        this.eventBus = options.eventBus;
+        this.eventBus.on('messageSent', this.refresh);
 
         this.collection = new MessageList();
         this.collection.bind('add', this.appendMessage);

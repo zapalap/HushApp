@@ -6,7 +6,7 @@
     },
     initialize: function (options) {
         _.bindAll(this, 'sendMessage', 'sendIfAcquired')
-        this.vent = options.vent;
+        this.eventBus = options.eventBus;
         this.render();
     },
     render: function () {
@@ -29,7 +29,7 @@
             type: 'POST',
             dataType: 'json',
             success: (response) => {
-                this.vent.trigger("messageSent");
+                this.eventBus.trigger("messageSent");
             }
         }
 

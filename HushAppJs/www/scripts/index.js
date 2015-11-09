@@ -26,8 +26,8 @@
     };
 
     function bootstrapApplication() {
-        var vent = _.extend({}, Backbone.Events);
-        var messageListView = new MessageListView({ vent: vent });
-        var inputView = new InputView({ vent: vent });
+        var EventBus = _.extend({}, Backbone.Events);
+        var messageListView = new MessageListView({ eventBus: EventBus });
+        var inputView = new InputView({ eventBus: EventBus });
     };
 })();
